@@ -1,0 +1,11 @@
+.PropertySummaryList-Key{
+    font-weight: bold;
+    margin-left: 20px; 
+
+}
+
+.PropertySummaryList-Value{
+    display: block;
+    padding-top: 0.5em;
+    margin-left: 20px;  
+}

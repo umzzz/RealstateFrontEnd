@@ -1,0 +1,16 @@
+.ListingSummary {
+    background-color: #A4B3B6;
+    text-align: left;
+    padding: 25px;
+    font-family: Roboto
+}
+
+.ListingSummary-Summary {
+    padding: 15px 0;
+}
+
+.ImageCarousel-image {
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
+}

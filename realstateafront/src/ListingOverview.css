@@ -1,0 +1,35 @@
+.ListingOverview-Content{
+    background-color: #A4B3B6;
+    text-align: left;
+    height: auto;
+    font-family :Roboto;
+    margin: 10px 0px;
+    padding: 25px;
+}
+
+.ListingOverview-Price{
+    margin: 3px 20px;
+}
+
+.ListingOverview-Address{
+    padding: 8px 0;
+    width : 20%
+}
+
+.ListingOverview-mlsnumber{
+    margin: 3px 20px;
+    margin-bottom: 25px;
+}
+.ListingOverview-Details{
+    padding-bottom: 1.5rem;
+}
+
+.ListingOverview-ContactInfo{
+    margin: auto 0;
+    padding-left: 1rem;
+}
+
+.Footer-Content{
+    margin: auto;
+    color: black;
+}
