@@ -26,3 +26,9 @@ hr{
 }
 
 
+@media(max-width: 768px){
+    .RoomsDetails-Detials{
+        flex-direction: column;
+    }
+}
+

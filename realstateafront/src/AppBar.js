@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
-import { AppBar, Toolbar, Typography, InputLabel, FormHelperText, FormControl, Select, NativeSelect } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, InputLabel, FormControl, Select, NativeSelect, MenuItem } from '@material-ui/core';
+import axios from 'axios'
 class NavBar extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            currency: window.localStorage.getItem('rate')
+        }
+        this.handelChange = this.handelChange.bind(this)
     }
 
+    async handelChange(evt) {
+        let rate = await axios.get(`https://api.exchangeratesapi.io/latest?symbols=${this.state.currency},${evt.target.value}`)
+        let exchnageRate =rate.data.rates[evt.target.value]/rate.data.rates[this.state.currency] 
+        window.localStorage.setItem("exchnageRate", exchnageRate.toString())
+        this.setState({ currency: evt.target.value })
+        this.props.rate(exchnageRate)
+        window.localStorage.setItem("rate", evt.target.value)
+
+    }
     render() {
         let currenctSelectorStyle = {
             display: "flex",
@@ -18,16 +31,16 @@ class NavBar extends Component {
                         <Typography variant="h6" >
                             RealState APP
                         </Typography>
-                        <FormControl style ={{width : "75px"}}>
-                            <InputLabel htmlFor="age-native-simple">Curreny</InputLabel>
+                        <FormControl>
+                            <InputLabel style={{ width: "75px" }}>Curreny</InputLabel>
                             <Select
-                            native
-                            autoWidth
+                                autoWidth
+                                value={this.state.currency}
+                                onChange={this.handelChange}
                             >
-                                
-                                <option value={10}>USD</option>
-                                <option value={20}>CAD</option>
-                                <option value={30}>Pound</option>
+                                <MenuItem value={'USD'}>USD</MenuItem>
+                                <MenuItem value={'CAD'}>CAD</MenuItem>
+                                <MenuItem value={'GBP'}>Pound</MenuItem>
                             </Select>
                         </FormControl>
                     </Toolbar>

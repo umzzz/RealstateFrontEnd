@@ -4,33 +4,58 @@ import axios from 'axios'
 import './Listing.css'
 import ListingSummary from './ListingSummary'
 import Container from '@material-ui/core/Container';
-import NavBar from './AppBar'
 import ListingDetails from './ListingDetails'
 import ImageCarousel from './ImageCarousel'
 import RoomDetails from './RoomDetails'
-import Footer from './Footer'
 
 class Listing extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listing: null
+            listing: null,
+            properties: {},
         }
+        this.updatePrice = this.updatePrice.bind(this)
     }
     componentDidMount() {
         let currentComponent = this;
-        axios.get('https://localhost:44365/api/Listing/5dffe125d8ae6147f476173c')
+        axios.get(`https://localhost:44365/api/Listing/${this.props.match.params.id}`)
             .then(function (response) {
                 console.log(response.data)
                 currentComponent.setState({
                     listing: response.data
                 })
+                if (currentComponent.state.listing != null) {
+                    let summarryList = {
+                        "PropertyType": currentComponent.state.listing.propertySubType,
+                        "buildyear": currentComponent.state.listing.buildyear,
+                        "Story": 2
+                    }
+
+                    let listingDetailsprop = currentComponent.createListingsDetails()
+
+                    let props = {
+                        "price": currentComponent.getPrice(),
+                        "Address": currentComponent.state.listing.location.address,
+                        "mlsNumber": currentComponent.state.listing.listingID,
+                        "description": currentComponent.state.listing.description,
+                        "propertySummary": summarryList,
+                        "listingDetailsprop": listingDetailsprop,
+                        "lat": currentComponent.state.listing.location.latitude,
+                        "long": currentComponent.state.listing.location.longitude,
+                        "BedRooms": currentComponent.state.listing.bedProperties.roomProperties
+                    };
+                    console.log(props)
+                    currentComponent.setState({ properties: props })
+                }
             })
             .catch(function (error) {
                 console.log(error);
             })
     }
-
+    getDerivedStateFromProps(props, state) {
+        console.log('Prop from getDerivedStateFromProps', props)
+    }
     createListingsDetails() {
         let listingDetailsprop = []
         let bedroom = {
@@ -53,44 +78,27 @@ class Listing extends Component {
             listingDetailsprop.push(newProperty)
         }
         return listingDetailsprop
-
-
+    }
+    updatePrice(updatedRate){
+        let newPrice = parseFloat(this.state.properties.price) * updatedRate
+        this.setState(st => {
+            st.properties.price = newPrice
+        })
+    }
+    getPrice() {
+        let newPrice = parseFloat(this.state.listing.price) * this.props.rate
+        return newPrice.toFixed(2)
     }
     render() {
-        let props = {}
-        if (this.state.listing != null) {
-            let summarryList = {
-                "PropertyType": this.state.listing.propertySubType,
-                "buildyear": this.state.listing.buildyear,
-                "Story": 2
-            }
-
-            let listingDetailsprop = this.createListingsDetails()
-
-            props = {
-                "price": parseFloat(this.state.listing.price).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
-                "Address": this.state.listing.location.address,
-                "mlsNumber": this.state.listing.listingID,
-                "description": this.state.listing.description,
-                "propertySummary": summarryList,
-                "listingDetailsprop": listingDetailsprop,
-                "lat": this.state.listing.location.latitude,
-                "long": this.state.listing.location.longitude,
-                "BedRooms": this.state.listing.bedProperties.roomProperties
-            };
-        }
         return (
             <div className="Listing">
                 <Container maxWidth="xl" disableGutters={true}>
-                    <NavBar />
                     <ImageCarousel />
-                    <ListingOverview propsObject={props} />
-                    <ListingSummary propsObject={props} />
-                    <ListingDetails listingDetailsprop={props.listingDetailsprop} />
-                    <RoomDetails rooms={props.BedRooms} />
-
+                    <ListingOverview propsObject={this.state.properties} price={this.state.properties.price} key={this.props.rate} />
+                    <ListingSummary propsObject={this.state.properties} />
+                    <ListingDetails listingDetailsprop={this.state.properties.listingDetailsprop} />
+                    <RoomDetails rooms={this.state.properties.BedRooms} />
                 </Container>
-                <Footer />
             </div>
         );
     }

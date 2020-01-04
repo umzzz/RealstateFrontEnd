@@ -1,16 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Listing from './Listing'
 import Container from '@material-ui/core/Container';
+import { Route } from 'react-router-dom'
+import Footer from './Footer'
+import NavBar from './AppBar'
 
-function App() {
-  return (
-    <div>
-    <Container maxWidth="lg" >
-      <Listing/>
-      </Container>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      exchangeMultiplier : window.localStorage.getItem("exchnageRate") || "1"
+     }
+     this.listingElement = React.createRef() 
+     this.updateRate = this.updateRate.bind(this)
+  }
+  componentWillMount(){
+    window.localStorage.getItem("rate") || window.localStorage.setItem("rate","CAD")
+    window.localStorage.getItem("exchnageRate") || window.localStorage.setItem("exchnageRate","1")
 }
-
+  updateRate(updatedRate){
+    this.listingElement.current.updatePrice(updatedRate)
+    this.setState({exchangeMultiplier : updatedRate})
+  }
+  render() { 
+    return (
+      <div>
+        <Route>
+          <Container maxWidth="lg" >
+            <NavBar rate = {this.updateRate}/>
+            <Route exact path="/listing/:id"
+              render={routeProp => <Listing {...routeProp} rate = {this.state.exchangeMultiplier} ref={this.listingElement}/>}
+            />
+            <Footer />
+          </Container>
+        </Route>
+      </div>
+    );
+  }
+}
 export default App;

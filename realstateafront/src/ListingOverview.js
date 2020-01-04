@@ -4,12 +4,22 @@ import { Typography, Paper, ExpansionPanel, ExpansionPanelSummary, ExpansionPane
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 class ListingOverview extends Component {
+    constructor(props){
+        super(props)
+        this.state ={
+        }
+    }
+    getPrice() {
+        // let newPrice = parseFloat(this.props.propsObject.price) * this.props.exchangeRate
+            
+        return parseFloat(this.props.propsObject.price).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    }
     render() {
         return (
             <Paper elevation={3}>
                 <div className="ListingOverview-Content card">
                     <div className="ListingOverview-Details">
-                        <Typography variant="h3" className="ListingOverview-Price">${this.props.propsObject.price}</Typography>
+                        <Typography variant="h3" className="ListingOverview-Price" > ${this.getPrice()}</Typography>
                         <div className = "ListingOverview-Address">
                             <Typography variant="subtitle2">{this.props.propsObject.Address}</Typography>
                             <Typography variant="subtitle2" style ={{paddingTop : "8px"}}>MLS Number: {this.props.propsObject.mlsNumber}</Typography>
