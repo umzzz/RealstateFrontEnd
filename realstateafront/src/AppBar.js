@@ -15,8 +15,10 @@ class NavBar extends Component {
         let exchnageRate =rate.data.rates[evt.target.value]/rate.data.rates[this.state.currency] 
         window.localStorage.setItem("exchnageRate", exchnageRate.toString())
         this.setState({ currency: evt.target.value })
-        this.props.rate(exchnageRate)
+        let currencySign = (evt.target.value === "CAD" || evt.target.value === "USD") ? "$" : "£"
+        this.props.rate(exchnageRate,currencySign)
         window.localStorage.setItem("rate", evt.target.value)
+        window.localStorage.setItem("currencySymbol", currencySign)
 
     }
     render() {
@@ -26,7 +28,7 @@ class NavBar extends Component {
         }
         return (
             <div >
-                <AppBar position="static" style={{ backgroundColor: "#ADADAD" }}>
+                <AppBar position="static" style={{ backgroundColor: "#DCD0C0" }}>
                     <Toolbar style={currenctSelectorStyle}>
                         <Typography variant="h6" >
                             RealState APP
@@ -51,24 +53,3 @@ class NavBar extends Component {
 }
 
 export default NavBar;
-
-
-/**
- *     <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="age-native-simple">Age</InputLabel>
-        <Select
-          native
-          value={state.age}
-          onChange={handleChange('age')}
-          inputProps={{
-            name: 'age',
-            id: 'age-native-simple',
-          }}
-        >
-          <option value="" />
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
-        </Select>
-      </FormControl>
- */

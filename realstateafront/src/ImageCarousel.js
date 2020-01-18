@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import Carousel from 'react-material-ui-carousel'
 import Paper from '@material-ui/core/Paper';
 import uuid from 'uuid/v4'
+import firstImage from './img/1.jpg'
+import secondImage from './img/2.jpg'
+import thirdImage from './img/3.jpg'
+import forthImage from './img/4.jpg'
+
 class ImageCarousel extends Component {
     constructor(props) {
         super(props);
@@ -19,19 +24,26 @@ class ImageCarousel extends Component {
     }
 
     updateWindowDimensions() {
-        let width = window.innerWidth > 1000 ? 1000 : window.innerWidth
-        // let calculateHeight = width * 1.33
+        let width = window.innerWidth > 1000 ? 1000 : (window.innerWidth - 30)
         let height = window.innerHeight > 500 ? 500 : window.innerWidth
-        console.log(window.innerHeight)
         this.setState({ width: width, height: height });
     }
     render() {
         const items = [
             {
-                name: "https://picsum.photos/id/1018/1000/600/",
+                name: firstImage,
             },
             {
-                name: "https://picsum.photos/id/1015/1000/600/",
+                name: secondImage,
+
+            },
+            {
+                name: thirdImage,
+
+            },
+
+            {
+                name: forthImage,
 
             }
         ];
@@ -42,10 +54,10 @@ class ImageCarousel extends Component {
                 {
                     items.map(item => {
                         return (
-                            
+
                             <Paper elevation={0} key={uuid()} >
                                 <div className='ImageCarousel-image'>
-                                    <img src={item.name} alt="" style={{ height: this.state.height, width: this.state.width }} />
+                                    <img src={item.name} alt="" style={{ height: this.state.height, width: this.state.width, objectFit : "scale-down" }} />
                                 </div>
                             </Paper>
                         )

@@ -53,9 +53,6 @@ class Listing extends Component {
                 console.log(error);
             })
     }
-    getDerivedStateFromProps(props, state) {
-        console.log('Prop from getDerivedStateFromProps', props)
-    }
     createListingsDetails() {
         let listingDetailsprop = []
         let bedroom = {
@@ -80,6 +77,7 @@ class Listing extends Component {
         return listingDetailsprop
     }
     updatePrice(updatedRate){
+
         let newPrice = parseFloat(this.state.properties.price) * updatedRate
         this.setState(st => {
             st.properties.price = newPrice
@@ -94,7 +92,7 @@ class Listing extends Component {
             <div className="Listing">
                 <Container maxWidth="xl" disableGutters={true}>
                     <ImageCarousel />
-                    <ListingOverview propsObject={this.state.properties} price={this.state.properties.price} key={this.props.rate} />
+                    <ListingOverview propsObject={this.state.properties} price={this.state.properties.price} key={this.props.rate} currencySymbol = {this.props.currencySymbol} />
                     <ListingSummary propsObject={this.state.properties} />
                     <ListingDetails listingDetailsprop={this.state.properties.listingDetailsprop} />
                     <RoomDetails rooms={this.state.properties.BedRooms} />

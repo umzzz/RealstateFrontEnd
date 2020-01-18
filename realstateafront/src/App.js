@@ -10,7 +10,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      exchangeMultiplier : window.localStorage.getItem("exchnageRate") || "1"
+      exchangeMultiplier : window.localStorage.getItem("exchnageRate") || "1",
+      rateSymbol : window.localStorage.getItem("currencySymbol") ||"$"
      }
      this.listingElement = React.createRef() 
      this.updateRate = this.updateRate.bind(this)
@@ -18,10 +19,14 @@ class App extends Component {
   componentWillMount(){
     window.localStorage.getItem("rate") || window.localStorage.setItem("rate","CAD")
     window.localStorage.getItem("exchnageRate") || window.localStorage.setItem("exchnageRate","1")
+    window.localStorage.getItem("exchnageRate") || window.localStorage.setItem("currencySymbol","$")
 }
-  updateRate(updatedRate){
+  updateRate(updatedRate, symbol){
     this.listingElement.current.updatePrice(updatedRate)
-    this.setState({exchangeMultiplier : updatedRate})
+    this.setState({
+      exchangeMultiplier : updatedRate,
+      rateSymbol : symbol
+    })
   }
   render() { 
     return (
@@ -30,7 +35,7 @@ class App extends Component {
           <Container maxWidth="lg" >
             <NavBar rate = {this.updateRate}/>
             <Route exact path="/listing/:id"
-              render={routeProp => <Listing {...routeProp} rate = {this.state.exchangeMultiplier} ref={this.listingElement}/>}
+              render={routeProp => <Listing {...routeProp} rate = {this.state.exchangeMultiplier} ref={this.listingElement} currencySymbol = {this.state.rateSymbol}/>}
             />
             <Footer />
           </Container>

@@ -20,7 +20,7 @@ class ContentTab extends Component {
     render() {
         return (
             <div>
-                <Paper style ={{backgroundColor : "#adadad"}}> 
+                <Paper style ={{backgroundColor : "#DCD0C0"}}> 
                     <Tabs 
                         value = {this.state.selectedtab}
                         variant="fullWidth"

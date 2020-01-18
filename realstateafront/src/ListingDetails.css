@@ -1,5 +1,5 @@
 .ListingDetails {
-    background-color: #A4B3B6;
+    background-color: #f4f4f4;
     text-align: left;
     height: auto;
     font-family :Roboto;
@@ -16,8 +16,12 @@
 
 .RoomsDetails-Detials{
     display: flex;
-    justify-content: flex-start;
+    justify-content : start;
     padding: 0.3rem 0;
+}
+.RoomDetials-Name {
+    width: 30%;
+    padding: 0 10vh ;
 }
 hr{
     border: 0;
@@ -29,6 +33,11 @@ hr{
 @media(max-width: 768px){
     .RoomsDetails-Detials{
         flex-direction: column;
+    }
+    .RoomDetials-Name {
+        width: 100%;
+        padding: 0;
+        padding-bottom:8px;
     }
 }
 

@@ -13,16 +13,18 @@ class RoomDetails extends Component {
         let properties = []
         if (this.props.rooms != undefined) {
             properties = Object.entries(this.props.rooms).map(x =>
-                <div  key={uuid()}>
+                <div key={uuid()}>
                     <div className="RoomsDetails-Detials">
-                        <Typography variant="body1" className="RoomsDetails-Name" >
-                            {x[0]}
+                        <span className = "RoomDetials-Name"> {x[0]}</span>
+                        <span> {x[1]}</span>
+                        {/* <Typography variant="body1" className="RoomsDetails-Name" >
+                        {x[0]}
                         </Typography>
                         <Typography variant="body1" className="RoomsDetails-value">
                             {x[1]}
-                        </Typography>
+                        </Typography> */}
                     </div>
-                    <hr/>
+                    <hr />
                 </div>
             )
         }
