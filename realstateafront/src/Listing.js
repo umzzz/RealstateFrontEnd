@@ -16,6 +16,7 @@ class Listing extends Component {
             properties: {},
         }
         this.updatePrice = this.updatePrice.bind(this)
+        this._currentListing = null
     }
     componentDidMount() {
         let currentComponent = this;
@@ -43,7 +44,8 @@ class Listing extends Component {
                         "listingDetailsprop": listingDetailsprop,
                         "lat": currentComponent.state.listing.location.latitude,
                         "long": currentComponent.state.listing.location.longitude,
-                        "BedRooms": currentComponent.state.listing.bedProperties.roomProperties
+                        "BedRooms": currentComponent.state.listing.bedProperties.roomProperties,
+                        attachmets: currentComponent.state.listing.pictures
                     };
                     console.log(props)
                     currentComponent.setState({ properties: props })
@@ -91,7 +93,7 @@ class Listing extends Component {
         return (
             <div className="Listing">
                 <Container maxWidth="xl" disableGutters={true}>
-                    <ImageCarousel />
+                    <ImageCarousel images = {this.state.properties.attachmets}/>
                     <ListingOverview propsObject={this.state.properties} price={this.state.properties.price} key={this.props.rate} currencySymbol = {this.props.currencySymbol} />
                     <ListingSummary propsObject={this.state.properties} />
                     <ListingDetails listingDetailsprop={this.state.properties.listingDetailsprop} />

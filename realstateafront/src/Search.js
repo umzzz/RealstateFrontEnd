@@ -4,13 +4,12 @@ import SearchResultMobile from "./SearchResultsMobile";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Skeleton from "@material-ui/lab/Skeleton";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 
 const Styles = {
   root: {
     minHeight: "80vh",
-    display: "flex",
-    justifyContent: "center",
     margin: "10px 0"
   },
   search: {
@@ -36,7 +35,7 @@ const Styles = {
   },
   results: {
     width: "70%",
-    padding: "0 15%"
+    margin: "0 15%"
   }
 };
 class Search extends Component {
@@ -65,37 +64,36 @@ class Search extends Component {
     });
     let body = {
       SearchTerm: this.state.searchTerm,
-      Filters: [
-      ]
+      Filters: []
     };
 
     axios
       .post(`https://localhost:44365/api/Listing/filter`, body)
       .then(function(response) {
-        if(response.data === "We couldnt find any listings please expand your search"){
+        if (
+          response.data ===
+          "We couldnt find any listings please expand your search"
+        ) {
           currentComponent.setState({
             resultsDisplaying: true,
             resultFound: null,
             isLoaing: false
           });
-        }else{
-          currentComponent.setState({
-            resultsDisplaying: true,
-            resultFound: response.data,
-            isLoaing: false
+        } else {
+          currentComponent.props.history.push({
+            pathname: "/search",
+            state: { results: response.data }
           });
         }
-
       });
   }
   render() {
     const { classes } = this.props;
-    const { resultsDisplaying,resultFound } = this.state;
+    const { resultsDisplaying, resultFound } = this.state;
+
     return (
       <Paper className={classes.root}>
-        {resultsDisplaying &&  resultFound ? (
-          <SearchResultMobile results={resultFound} />
-        ) : (
+        {
           <table style={{ width: "100%" }}>
             <tbody>
               <tr style={{ height: "8em" }}>
@@ -132,18 +130,17 @@ class Search extends Component {
                 </tr>
               )}
               {resultFound == null && resultsDisplaying && (
-                <tr className={classes.results}>
+                <tr>
                   <td>
-                    <div style ={{margin: "auto"}}>
-                    <h4>We did not find anything please search again</h4>
-                    </div>
-                   
+                    <Paper className={classes.results}>
+                      <h4>We did not find anything please search again</h4>
+                    </Paper>
                   </td>
                 </tr>
               )}
             </tbody>
           </table>
-        )}
+        }
       </Paper>
     );
   }

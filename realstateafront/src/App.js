@@ -6,6 +6,7 @@ import { Route } from "react-router-dom";
 import Footer from "./Footer";
 import NavBar from "./AppBar";
 import Search from "./Search";
+import SearchResultMobile from "./SearchResultsMobile";
 
 class App extends Component {
   constructor(props) {
@@ -38,7 +39,12 @@ class App extends Component {
         <Route>
           <Container maxWidth="lg">
             <NavBar rate={this.updateRate} />
-            <Route exact path="/" render={ () => <Search />} />
+            <Route
+              exact
+              path="/"
+              render={routeProps => <Search {...routeProps} />}
+            />
+            <Route exact path="/search" render={() => <SearchResultMobile />} />
             <Route
               exact
               path="/listing/:id"
