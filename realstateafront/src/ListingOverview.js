@@ -16,14 +16,15 @@ class ListingOverview extends Component {
         return parseFloat(this.props.propsObject.price).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
     }
     render() {
+        let listing = this.props.propsObject
         return (
             <Paper elevation={3}>
                 <div className="ListingOverview-Content card">
                     <div className="ListingOverview-Details">
                         <Typography variant="h3" className="ListingOverview-Price" >{this.props.currencySymbol}{this.getPrice()}</Typography>
                         <div className = "ListingOverview-Address">
-                            <Typography variant="subtitle2">{this.props.propsObject.Address}</Typography>
-                            <Typography variant="subtitle2" style ={{paddingTop : "8px"}}>MLS Number: {this.props.propsObject.mlsNumber}</Typography>
+                            <Typography variant="subtitle2">{listing.location.address}</Typography>
+                            <Typography variant="subtitle2" style ={{paddingTop : "8px"}}>MLS Number: {listing.listingID}</Typography>
                         </div>
                     </div>
                     <ExpansionPanel style={{ backgroundColor: "#DCD0C0" }}>

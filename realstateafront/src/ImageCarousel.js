@@ -29,42 +29,15 @@ class ImageCarousel extends Component {
     this.setState({ width: width, height: height });
   }
   render() {
-    console.log(this.props.images);
     let { images } = this.props;
-    let items = [];
-    
-    if (images != undefined) {
-      images.map(x => {
-        items.push({
-          name: x.url
-        });
-      });
-    }
-
-    // const items = [
-    //   {
-    //     name: firstImage
-    //   },
-    //   {
-    //     name: secondImage
-    //   },
-    //   {
-    //     name: thirdImage
-    //   },
-
-    //   {
-    //     name: forthImage
-    //   }
-    // ];
-
     return (
       <Carousel autoPlay={false}>
-        {items.map(item => {
+        {images.map(image => {
           return (
             <Paper elevation={0} key={uuid()}>
               <div className="ImageCarousel-image">
                 <img
-                  src={item.name}
+                  src={`https://localhost:44365/api/Attachment/getObject/${image.url}`}
                   alt=""
                   style={{
                     height: this.state.height,

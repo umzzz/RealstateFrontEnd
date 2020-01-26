@@ -31,11 +31,12 @@ class ListingSummary extends Component {
         }
     }
     render() {
+        let listing = this.props.propsObject
         let summaryList = [];
-        for (const key in this.props.propsObject.propertySummary) {
+        for (const key in listing.propertySummary) {
             summaryList.push(
                 <Grid key={uuid()}>
-                    <PropertySummaryList propertyKey={key} propertyValue={this.props.propsObject.propertySummary[key]} />
+                    <PropertySummaryList propertyKey={key} propertyValue={listing.propertySummary[key]} />
                 </Grid>
             )
         }
@@ -43,7 +44,7 @@ class ListingSummary extends Component {
             display = (
                 <div>
                     <h2 className="ListingSummary-Heading">Description</h2>
-                    <p className="ListingSummary-Content">{this.props.propsObject.description}</p>
+                    <p className="ListingSummary-Content">{listing.description}</p>
                     <h2 className="ListingSummary-Heading">Property Summary</h2>
                     <div className="ListingSummary-Summary">
                         <Grid item xs={6}>
@@ -56,7 +57,7 @@ class ListingSummary extends Component {
             )
         } else if (this.state.map) {
             display = (
-                <MapsComponent lat={this.props.propsObject.lat} lang={this.props.propsObject.long} />
+                <MapsComponent lat={listing.location.latitude} lang={listing.location.longitude} />
             )
         }
 
