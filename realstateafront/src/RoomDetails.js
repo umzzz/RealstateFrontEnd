@@ -11,18 +11,12 @@ class RoomDetails extends Component {
 
     render() {
         let properties = []
-        if (this.props.rooms != undefined) {
+        if (this.props.rooms !== undefined) {
             properties = Object.entries(this.props.rooms).map(x =>
                 <div key={uuid()}>
                     <div className="RoomsDetails-Detials">
                         <span className = "RoomDetials-Name"> {x[0]}</span>
                         <span> {x[1]}</span>
-                        {/* <Typography variant="body1" className="RoomsDetails-Name" >
-                        {x[0]}
-                        </Typography>
-                        <Typography variant="body1" className="RoomsDetails-value">
-                            {x[1]}
-                        </Typography> */}
                     </div>
                     <hr />
                 </div>

@@ -13,7 +13,7 @@ class ListingOverview extends Component {
     }
     getPrice() {
             
-        return parseFloat(this.props.propsObject.price).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+        return parseFloat(this.props.price).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
     }
     render() {
         let listing = this.props.propsObject

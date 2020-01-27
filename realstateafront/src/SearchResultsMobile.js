@@ -9,7 +9,6 @@ import {
   Typography
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import houseImage from "./img/1.jpg";
 import uuid from "uuid/v4";
 import "./SearchResultMobile.css";
 import { withRouter, Redirect } from "react-router-dom";
@@ -26,7 +25,12 @@ class SearchResultMobile extends Component {
     };
     this.handleCardClose = this.handleCardClose.bind(this);
   }
-
+  getPrice(price) {
+    console.log(price);
+    return parseFloat(price * this.props.rate)
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, "$&,");
+  }
   handleClick(result) {
     this.setState({
       resultIsDisplayed: true,
@@ -47,11 +51,8 @@ class SearchResultMobile extends Component {
       return str;
     }
   }
-  async componentWillMount() {
-
-  }
   render() {
-    let results = null; 
+    let results = null;
     if (
       this.props.location != null &&
       this.props.location.state != null &&
@@ -136,7 +137,8 @@ class SearchResultMobile extends Component {
                   >
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h2">
-                        ${resultSelected.price}
+                        {this.props.currencySymbol}
+                        {this.getPrice(resultSelected.price)}
                       </Typography>
                       <Typography
                         variant="body2"

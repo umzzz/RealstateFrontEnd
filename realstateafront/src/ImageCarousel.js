@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import Carousel from "react-material-ui-carousel";
 import Paper from "@material-ui/core/Paper";
 import uuid from "uuid/v4";
-import firstImage from "./img/1.jpg";
-import secondImage from "./img/2.jpg";
-import thirdImage from "./img/3.jpg";
-import forthImage from "./img/4.jpg";
 
 class ImageCarousel extends Component {
   constructor(props) {

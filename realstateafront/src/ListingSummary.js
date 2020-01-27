@@ -23,9 +23,9 @@ class ListingSummary extends Component {
     }
 
     handleClick(clickString) {
-        if (clickString == "description") {
+        if (clickString === "description") {
             this.setState({ summary: true, map: false,   setCss: false});
-        } else if (clickString == "map") {
+        } else if (clickString === "map") {
 
             this.setState({ summary: false, map: true, setCss : true});
         }

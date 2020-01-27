@@ -28,11 +28,11 @@ function getLatLngCenter(latLngInDegr) {
     var avgZ = sumZ / latLngInDegr.length;
 
     // convert average x, y, z coordinate to latitude and longtitude
-    var lng = Math.atan2(avgY, avgX);
+    var longitue = Math.atan2(avgY, avgX);
     var hyp = Math.sqrt(avgX * avgX + avgY * avgY);
-    var lat = Math.atan2(avgZ, hyp);
+    var lattitiude = Math.atan2(avgZ, hyp);
 
-    return ([rad2degr(lat), rad2degr(lng)]);
+    return ([rad2degr(lattitiude), rad2degr(longitue)]);
 }
 
 module.exports ={

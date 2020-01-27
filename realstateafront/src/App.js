@@ -12,25 +12,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      exchangeMultiplier: window.localStorage.getItem("exchnageRate") || "1",
-      rateSymbol: window.localStorage.getItem("currencySymbol") || "$"
+      exchangeMultiplier: "1",
+      rateSymbol: "$",
+      currency: "USD"
     };
-    this.listingElement = React.createRef();
+    // this.listingElement = React.createRef();
     this.updateRate = this.updateRate.bind(this);
   }
-  componentWillMount() {
-    window.localStorage.getItem("rate") ||
-      window.localStorage.setItem("rate", "CAD");
-    window.localStorage.getItem("exchnageRate") ||
-      window.localStorage.setItem("exchnageRate", "1");
-    window.localStorage.getItem("exchnageRate") ||
-      window.localStorage.setItem("currencySymbol", "$");
-  }
-  updateRate(updatedRate, symbol) {
-    this.listingElement.current.updatePrice(updatedRate);
+  updateRate(updatedRate, symbol, currency) {
     this.setState({
       exchangeMultiplier: updatedRate,
-      rateSymbol: symbol
+      rateSymbol: symbol,
+      currency: currency
     });
   }
   render() {
@@ -38,13 +31,25 @@ class App extends Component {
       <div>
         <Route>
           <Container maxWidth="lg">
-            <NavBar rate={this.updateRate} />
+            <NavBar
+              rate={this.updateRate}
+              currencySymbol={this.state.currency}
+            />
             <Route
               exact
               path="/"
               render={routeProps => <Search {...routeProps} />}
             />
-            <Route exact path="/search" render={() => <SearchResultMobile />} />
+            <Route
+              exact
+              path="/search"
+              render={() => (
+                <SearchResultMobile
+                  rate={this.state.exchangeMultiplier}
+                  currencySymbol={this.state.rateSymbol}
+                />
+              )}
+            />
             <Route
               exact
               path="/listing/:id"
@@ -52,7 +57,6 @@ class App extends Component {
                 <Listing
                   {...routeProp}
                   rate={this.state.exchangeMultiplier}
-                  ref={this.listingElement}
                   currencySymbol={this.state.rateSymbol}
                 />
               )}

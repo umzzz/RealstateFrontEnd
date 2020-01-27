@@ -1,15 +1,22 @@
 import React, { Component } from "react";
-import { Paper, withStyles, InputBase, FormControl } from "@material-ui/core";
-import SearchResultMobile from "./SearchResultsMobile";
+import {
+  Paper,
+  withStyles,
+  InputBase,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControlLabel,
+  Switch
+} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { withRouter } from "react-router-dom";
 import axios from "axios";
-
 const Styles = {
   root: {
-    minHeight: "80vh",
+    minHeight: "50vh",
     margin: "10px 0"
   },
   search: {
@@ -36,6 +43,13 @@ const Styles = {
   results: {
     width: "70%",
     margin: "0 15%"
+  },
+  select: {
+    minWidth: 135,
+    margin: "0 2%"
+  },
+  selectContainer: {
+    padding: "0 17%"
   }
 };
 class Search extends Component {
@@ -46,15 +60,30 @@ class Search extends Component {
       searchTerm: "",
       isLoaing: false,
       resultsDisplaying: false,
-      resultFound: null
+      resultFound: null,
+      currentSelectType: "Residential",
+      searchFilter: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleSwitchChange = this.handleSwitchChange.bind(this);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
   }
   handleChange(evt) {
     this.setState({
       searchTerm: evt.target.value
     });
+  }
+  handleSwitchChange() {
+    if (this.state.currentSelectType === "Residential") {
+      this.setState({
+        currentSelectType: "Comercial",
+      });
+    } else {
+      this.setState({
+        currentSelectType: "Residential",
+      });
+    }
   }
   handleClick(evt) {
     let currentComponent = this;
@@ -64,8 +93,10 @@ class Search extends Component {
     });
     let body = {
       SearchTerm: this.state.searchTerm,
-      Filters: []
+      "PropertyType" : this.state.currentSelectType,
+      Filters: this.state.searchFilter
     };
+    console.log(body)
 
     axios
       .post(`https://localhost:44365/api/Listing/filter`, body)
@@ -87,6 +118,134 @@ class Search extends Component {
         }
       });
   }
+  handleFilterChange(evt) {
+    if (evt.target.name === "minPrice") {
+      this.setState(st => {
+        let priceFilter = st.searchFilter.filter(x => x.FilterName === "Price");
+        if (priceFilter.length === 0) {
+          return st.searchFilter.push({
+            FilterName: "Price",
+            FilterValue: {
+              gt: evt.target.value
+            }
+          });
+        } else {
+          st.searchFilter.map(x => {
+            if (x.FilterName === "Price") {
+              x.FilterValue["gt"] = evt.target.value;
+            }
+            return x;
+          });
+          return st;
+        }
+      });
+    } else if (evt.target.name === "maxPrice") {
+      this.setState(st => {
+        let priceFilter = st.searchFilter.filter(x => x.FilterName === "Price");
+        if (priceFilter.length === 0) {
+          return st.searchFilter.push({
+            FilterName: "Price",
+            FilterValue: {
+              lt: evt.target.value
+            }
+          });
+        } else {
+          st.searchFilter.map(x => {
+            if (x.FilterName === "Price") {
+              x.FilterValue["lt"] = evt.target.value;
+            }
+            return x;
+          });
+          return st;
+        }
+      });
+    } else if (evt.target.name === "numberOfRooms") {
+      let roomsfilter = {};
+      if (evt.target.value.indexOf("+") === -1) {
+        roomsfilter = {
+          FilterName: "NumberOfBedRooms",
+          FilterValue: {
+            eq: evt.target.value
+          }
+        };
+      } else {
+        roomsfilter = {
+          FilterName: "NumberOfBedRooms",
+          FilterValue: {
+            gt: evt.target.value.substring(0, 1)
+          }
+        };
+      }
+      this.setState(st => {
+        let priceFilter = st.searchFilter.filter(
+          x => x.FilterName === "NumberOfBedRooms"
+        );
+        if (priceFilter.length === 0) {
+          return st.searchFilter.push(roomsfilter);
+        } else {
+          st.searchFilter.map(x => {
+            if (
+              x.FilterName === "NumberOfBedRooms" &&
+              evt.target.value.indexOf("+") === -1
+            ) {
+              x.FilterValue = {
+                eq: evt.target.value
+              };
+            } else {
+              x.FilterValue = {
+                gt: evt.target.value.substring(0, 1)
+              };
+            }
+            return x;
+          });
+          return st;
+        }
+      });
+    } else if (evt.target.name === "numberOfBathrooms") {
+      let roomsfilter = {};
+      if (evt.target.value.indexOf("+") === -1) {
+        roomsfilter = {
+          FilterName: "NumberOfBathRooms",
+          FilterValue: {
+            eq: evt.target.value
+          }
+        };
+      } else {
+        roomsfilter = {
+          FilterName: "NumberOfBathRooms",
+          FilterValue: {
+            gt: evt.target.value.substring(0, 1)
+          }
+        };
+      }
+      this.setState(st => {
+        let priceFilter = st.searchFilter.filter(
+          x => x.FilterName === "NumberOfBathRooms"
+        );
+        if (priceFilter.length === 0) {
+          return st.searchFilter.push(roomsfilter);
+        } else {
+          st.searchFilter.map(x => {
+            if (
+              x.FilterName === "NumberOfBathRooms" &&
+              evt.target.value.indexOf("+") === -1
+            ) {
+              x.FilterValue = {
+                eq: evt.target.value
+              };
+            } else {
+              x.FilterValue = {
+                gt: evt.target.value.substring(0, 1)
+              };
+            }
+            return x;
+          });
+          return st;
+        }
+      });
+    }
+  }
+
   render() {
     const { classes } = this.props;
     const { resultsDisplaying, resultFound } = this.state;
@@ -96,7 +255,7 @@ class Search extends Component {
         {
           <table style={{ width: "100%" }}>
             <tbody>
-              <tr style={{ height: "8em" }}>
+              <tr style={{ height: "5em" }}>
                 <th>
                   <FormControl component="form" className={classes.searchForm}>
                     <div className={classes.search}>
@@ -115,6 +274,97 @@ class Search extends Component {
                       </IconButton>
                     </div>
                   </FormControl>
+                </th>
+              </tr>
+              <tr>
+                <th>
+                  <div className={classes.selectContainer}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          //checked={state.checkedA}
+                          onChange={this.handleSwitchChange}
+                          color="default"
+                          inputProps={{
+                            "aria-label": "checkbox with default color"
+                          }}
+                        />
+                      }
+                      label={this.state.currentSelectType}
+                    />
+                    <FormControl className={classes.select}>
+                      <InputLabel id="demo-simple-select-label">
+                        Min Price
+                      </InputLabel>
+                      <Select
+                        defaultValue=""
+                        name="minPrice"
+                        onChange={this.handleFilterChange}
+                      >
+                        <MenuItem value={``} disabled>
+                          Min Price
+                        </MenuItem>
+                        <MenuItem value={`100,000`}>100,000</MenuItem>
+                        <MenuItem value={`200,000`}>200,000</MenuItem>
+                        <MenuItem value={`300,000`}>300,000</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl className={classes.select}>
+                      <InputLabel id="demo-simple-select-label">
+                        Max Price
+                      </InputLabel>
+                      <Select
+                        defaultValue=""
+                        name="maxPrice"
+                        onChange={this.handleFilterChange}
+                      >
+                        <MenuItem value={``} disabled>
+                          Max Price
+                        </MenuItem>
+                        <MenuItem value={`100,000`}>100,000</MenuItem>
+                        <MenuItem value={`200,000`}>200,000</MenuItem>
+                        <MenuItem value={`300,000`}>300,000</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl className={classes.select}>
+                      <InputLabel id="demo-simple-select-label">
+                        # of rooms
+                      </InputLabel>
+                      <Select
+                        defaultValue=""
+                        name="numberOfRooms"
+                        onChange={this.handleFilterChange}
+                      >
+                        <MenuItem value={``} disabled>
+                          # of rooms
+                        </MenuItem>
+                        <MenuItem value={`1`}>1</MenuItem>
+                        <MenuItem value={`2`}>2</MenuItem>
+                        <MenuItem value={`3`}>3</MenuItem>
+                        <MenuItem value={`3+`}>3+</MenuItem>
+                      </Select>
+                    </FormControl>
+                    {this.state.currentSelectType === "Residential" && (
+                      <FormControl className={classes.select}>
+                        <InputLabel id="demo-simple-select-label">
+                          # of bathrooms
+                        </InputLabel>
+                        <Select
+                          defaultValue=""
+                          name="numberOfBathrooms"
+                          onChange={this.handleFilterChange}
+                        >
+                          <MenuItem value={``} disabled>
+                            # of bathrooms
+                          </MenuItem>
+                          <MenuItem value={`1`}>1</MenuItem>
+                          <MenuItem value={`2`}>2</MenuItem>
+                          <MenuItem value={`3`}>3</MenuItem>
+                          <MenuItem value={`3+`}>3+</MenuItem>
+                        </Select>
+                      </FormControl>
+                    )}
+                  </div>
                 </th>
               </tr>
               {this.state.isLoaing && (

@@ -12,9 +12,9 @@ class Listing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listingIsFetched: false
+      listingIsFetched: false,
+      price: ""
     };
-    this.updatePrice = this.updatePrice.bind(this);
     this._currentListing = null;
   }
   async componentWillMount() {
@@ -22,56 +22,22 @@ class Listing extends Component {
       let fetchedListing = await axios.get(
         `https://localhost:44365/api/Listing/${this.props.match.params.id}`
       );
-      console.log(fetchedListing.data);
       this._currentListing = fetchedListing.data;
       this._currentListing["propertySummary"] = {
         PropertyType: fetchedListing.data.propertySubType,
         buildyear: fetchedListing.data.buildyear,
         Story: 2
       };
-      this._currentListing["listingDetailsprop"] = this.createListingsDetails()
+      this._currentListing["listingDetailsprop"] = this.createListingsDetails();
       this.setState({
-        listingIsFetched: true
+        listingIsFetched: true,
+        price: this._currentListing.price
       });
     } catch (error) {
+      //create an eror page and redirect
       console.log(error);
     }
   }
-
-  //     axios.get(`https://localhost:44365/api/Listing/${this.props.match.params.id}`)
-  //         .then(function (response) {
-  //             console.log(response.data)
-  //             currentComponent.setState({
-  //                 listing: response.data
-  //             })
-  //             if (currentComponent.state.listing != null) {
-  //                 let summarryList = {
-  //                     "PropertyType": currentComponent.state.listing.propertySubType,
-  //                     "buildyear": currentComponent.state.listing.buildyear,
-  //                     "Story": 2
-  //                 }
-
-  //                 let listingDetailsprop = currentComponent.createListingsDetails()
-
-  //                 currentComponent._currentListing  = {
-  //                     "price": currentComponent.getPrice(),
-  //                     "Address": currentComponent.state.listing.location.address,
-  //                     "mlsNumber": currentComponent.state.listing.listingID,
-  //                     "description": currentComponent.state.listing.description,
-  //                     "propertySummary": summarryList,
-  //                     "listingDetailsprop": listingDetailsprop,
-  //                     "lat": currentComponent.state.listing.location.latitude,
-  //                     "long": currentComponent.state.listing.location.longitude,
-  //                     "BedRooms": currentComponent.state.listing.bedProperties.roomProperties,
-  //                     attachmets: currentComponent.state.listing.pictures
-  //                 };
-  //                 console.log(currentComponent._currentListing)
-  //             }
-  //         })
-  //         .catch(function (error) {
-
-  //         })
-  // }
   createListingsDetails() {
     let listingDetailsprop = [];
     let bedroom = {
@@ -99,16 +65,6 @@ class Listing extends Component {
     }
     return listingDetailsprop;
   }
-  updatePrice(updatedRate) {
-    let newPrice = parseFloat(this._currentListing.price) * updatedRate;
-    this.setState(st => {
-      st.properties.price = newPrice;
-    });
-  }
-  getPrice() {
-    let newPrice = parseFloat(this._currentListing.price) * this.props.rate;
-    return newPrice.toFixed(2);
-  }
   render() {
     return (
       <React.Fragment>
@@ -118,7 +74,7 @@ class Listing extends Component {
               <ImageCarousel images={this._currentListing.pictures} />
               <ListingOverview
                 propsObject={this._currentListing}
-                price={this._currentListing.price}
+                price={this._currentListing.price * this.props.rate}
                 key={this.props.rate}
                 currencySymbol={this.props.currencySymbol}
               />
@@ -126,7 +82,9 @@ class Listing extends Component {
               <ListingDetails
                 listingDetailsprop={this._currentListing.listingDetailsprop}
               />
-              <RoomDetails rooms={this._currentListing.bedProperties.roomProperties} />
+              <RoomDetails
+                rooms={this._currentListing.bedProperties.roomProperties}
+              />
             </Container>
           </div>
         )}

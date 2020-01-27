@@ -16,7 +16,7 @@
 
 .RoomsDetails-Detials{
     display: flex;
-    justify-content : start;
+    justify-content : flex-start;
     padding: 0.3rem 0;
 }
 .RoomDetials-Name {
