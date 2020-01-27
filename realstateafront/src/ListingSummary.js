@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropertySummaryList from './PropertySummaryList'
-import Grid from '@material-ui/core/Grid';
 import './ListingSummary.css'
-import Paper from '@material-ui/core/Paper';
+import {Paper,Grid,Typography} from '@material-ui/core';
 import uuid from 'uuid/v4'
 import ContentTab from './ContentTab'
 import MapsComponent from './MapsComponent'
@@ -43,9 +42,9 @@ class ListingSummary extends Component {
         if (this.state.summary) {
             display = (
                 <div>
-                    <h2 className="ListingSummary-Heading">Description</h2>
-                    <p className="ListingSummary-Content">{listing.description}</p>
-                    <h2 className="ListingSummary-Heading">Property Summary</h2>
+                    <Typography variant = "h4" gutterBottom>Description</Typography>
+                    <Typography variant="body1" gutterBottom>{listing.description}</Typography>
+                    <Typography variant = "h4" gutterBottom>Property Summary</Typography>
                     <div className="ListingSummary-Summary">
                         <Grid item xs={6}>
                             <Grid container justify="space-between" spacing={4}>
@@ -64,7 +63,6 @@ class ListingSummary extends Component {
         return (
             <Paper elevation={3} >
                 <div className="ListingSummary card" 
-                //style={style}
                 >
                     <ContentTab selectTab={this.handleClick} />
                     {display}

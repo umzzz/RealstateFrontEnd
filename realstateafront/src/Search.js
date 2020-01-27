@@ -77,11 +77,11 @@ class Search extends Component {
   handleSwitchChange() {
     if (this.state.currentSelectType === "Residential") {
       this.setState({
-        currentSelectType: "Comercial",
+        currentSelectType: "Comercial"
       });
     } else {
       this.setState({
-        currentSelectType: "Residential",
+        currentSelectType: "Residential"
       });
     }
   }
@@ -93,10 +93,10 @@ class Search extends Component {
     });
     let body = {
       SearchTerm: this.state.searchTerm,
-      "PropertyType" : this.state.currentSelectType,
+      PropertyType: this.state.currentSelectType,
       Filters: this.state.searchFilter
     };
-    console.log(body)
+    console.log(body);
 
     axios
       .post(`https://localhost:44365/api/Listing/filter`, body)

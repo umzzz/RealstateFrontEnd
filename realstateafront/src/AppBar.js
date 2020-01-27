@@ -21,7 +21,7 @@ class NavBar extends Component {
   componentWillMount() {
     let currentState = this;
     if (currentState.state.selectedCurrency !== "USD") {
-      let selectedCurrency = currentState.state.selectedCurrency
+      let selectedCurrency = currentState.state.selectedCurrency;
       axios
         .get(
           `https://api.exchangeratesapi.io/latest?symbols=USD,${selectedCurrency}`
@@ -31,7 +31,7 @@ class NavBar extends Component {
           let exchnageRate =
             rate.data.rates[selectedCurrency] / rate.data.rates["USD"];
           let currencySign =
-          selectedCurrency === "CAD" || selectedCurrency === "USD"
+            selectedCurrency === "CAD" || selectedCurrency === "USD"
               ? "$"
               : "£";
           currentState.props.rate(exchnageRate, currencySign, selectedCurrency);

@@ -15,6 +15,7 @@ class Listing extends Component {
       listingIsFetched: false,
       price: ""
     };
+
     this._currentListing = null;
   }
   async componentWillMount() {

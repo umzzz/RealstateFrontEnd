@@ -1,37 +1,53 @@
-.ListingDetailsList {
+.ListingDetailsList{
+    width: 40%;
+    padding: 1rem 0;
+    margin-right: 10%;
+}
+.ListingDetailsList-Value{
+    margin-top: 1px;
+}
+
+
+.ListingDetailsList-Multiple {
     padding-right: 9em;
+    width: 100%;
+    padding: 0.5rem 0;
     
 }
-.ListingDetailsList-name{
+
+.ListingDetailsList-Name.ListingDetailsList-Name-Multple{
     font-weight: bold;
 }
 
-.ListingDetailsList-Container{
+.ListingDetailsList-Container-Multiple{
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: center; */
-
 }
 .ListingDetailsList-value{
     flex-grow: 1;
     margin-top: 0px; 
 }
-.ListingDetailsList-value-multiple{
+.ListingDetailsList-Value-Multiple{
     flex-grow: 1;
-    padding: 0.5rem 3rem;
-    width: 20%;
+    padding-left: 1rem ;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    width: 25%;
     
 }
 
 @media(max-width: 768px){
-    .ListingDetailsList-Container{
+    .ListingDetailsList-Container-Multiple{
         flex-direction: column;
     }
     .RoomsDetails-Name{
         padding-bottom: 2rem;
     }
     .ListingDetailsList-value{
-        width: 100%;
-        
+        width: 100%; 
     }
+    .ListingDetailsList-Value-Multiple{
+        width: 100%;
+    }
+
 }

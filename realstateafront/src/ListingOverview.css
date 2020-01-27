@@ -33,3 +33,10 @@
     margin: auto;
     color: black;
 }
+
+@media(max-width: 768px){
+    .ListingOverview-Address{
+        width : 80%
+    }
+
+}
