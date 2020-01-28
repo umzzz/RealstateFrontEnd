@@ -8,8 +8,10 @@ import {
   Select,
   MenuItem,
   FormControlLabel,
-  Switch
+  Switch,
+  Typography
 } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Skeleton from "@material-ui/lab/Skeleton";
@@ -42,7 +44,12 @@ const Styles = {
   },
   results: {
     width: "70%",
-    margin: "0 15%"
+    margin: "0 15%",
+    marginTop: "3rem"
+  },
+  resultsMessage: {
+    display: "flex",
+    justifyContent: "center"
   },
   select: {
     minWidth: 135,
@@ -382,9 +389,18 @@ class Search extends Component {
               {resultFound == null && resultsDisplaying && (
                 <tr>
                   <td>
-                    <Paper className={classes.results}>
-                      <h4>We did not find anything please search again</h4>
-                    </Paper>
+                    <div className={classes.results}>
+                      <Alert severity="info">
+                        {" "}
+                        <Typography
+                          className={classes.resultsMessage}
+                          variant="subtitle2"
+                        >
+                          We did not find anything please expand your search
+                          criteria
+                        </Typography>
+                      </Alert>
+                    </div>
                   </td>
                 </tr>
               )}

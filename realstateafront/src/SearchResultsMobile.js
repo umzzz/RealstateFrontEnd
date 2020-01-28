@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
+import { Map, GoogleApiWrapper, Marker, } from "google-maps-react";
 import {
   Grid,
   Card,
@@ -13,7 +13,6 @@ import uuid from "uuid/v4";
 import "./SearchResultMobile.css";
 import { withRouter, Redirect } from "react-router-dom";
 import CancelPresentationRoundedIcon from "@material-ui/icons/CancelPresentationRounded";
-import { getLatLngCenter } from "./Helper";
 
 class SearchResultMobile extends Component {
   constructor(props) {
@@ -61,16 +60,14 @@ class SearchResultMobile extends Component {
       results = this.props.location.state.results;
     }
     const { resultIsDisplayed, resultSelected, resultAnimation } = this.state;
-    let points = [];
+    let bounds = new this.props.google.maps.LatLngBounds();
     results.forEach(result => {
-      let location = {
-        lat: result.location.latitude,
-        lng: result.location.longitude
-      };
-      points.push(location);
+      let latlng = new this.props.google.maps.LatLng(
+        result.location.latitude,
+        result.location.longitude
+      );
+      bounds.extend(latlng);
     });
-    const center = getLatLngCenter(points);
-
     return (
       <div>
         {!results ? (
@@ -85,8 +82,12 @@ class SearchResultMobile extends Component {
             <Map
               className="MapsComponent"
               google={this.props.google}
-              zoom={12}
-              initialCenter={{ lat: center[0], lng: center[1] }}
+              zoom = {10}
+              initialCenter={{
+                lat: bounds.getCenter().lat(),
+                lng: bounds.getCenter().lng()
+              }}
+              bounds={bounds}
             >
               {results.map(result => (
                 <Marker
