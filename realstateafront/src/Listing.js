@@ -7,6 +7,7 @@ import Container from "@material-ui/core/Container";
 import ListingDetails from "./ListingDetails";
 import ImageCarousel from "./ImageCarousel";
 import RoomDetails from "./RoomDetails";
+import ComercialPropertied from "./ComericalProperties";
 
 class Listing extends Component {
   constructor(props) {
@@ -30,6 +31,18 @@ class Listing extends Component {
         Story: 2
       };
       this._currentListing["listingDetailsprop"] = this.createListingsDetails();
+      if (this._currentListing.comercialProperires != null) {
+        this._currentListing["ComericalListingProperties"] = [];
+        for (const property in this._currentListing.comercialProperires) {
+          let listingObject = {
+            key: property,
+            value: this._currentListing.comercialProperires[property]
+          };
+          this._currentListing["ComericalListingProperties"].push(
+            listingObject
+          );
+        }
+      }
       this.setState({
         listingIsFetched: true,
         price: this._currentListing.price
@@ -83,9 +96,15 @@ class Listing extends Component {
               <ListingDetails
                 listingDetailsprop={this._currentListing.listingDetailsprop}
               />
-              <RoomDetails
-                rooms={this._currentListing.bedProperties.roomProperties}
-              />
+              {this._currentListing.ComericalListingProperties !== undefined ? (
+                <ComercialPropertied
+                  comercial={this._currentListing.ComericalListingProperties}
+                />
+              ) : (
+                <RoomDetails
+                  rooms={this._currentListing.bedProperties.roomProperties}
+                />
+              )}
             </Container>
           </div>
         )}

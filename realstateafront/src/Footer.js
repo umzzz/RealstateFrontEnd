@@ -8,7 +8,8 @@ const styles = {
   },
   AppBar :{
     backgroundColor: "#F4F4F4" ,
-    marginTop : "1.5vh"
+    marginTop : "1.5vh",
+    border : "solid 1px #A6A6A6"
   }
 };
 

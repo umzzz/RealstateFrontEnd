@@ -27,7 +27,7 @@ class ListingOverview extends Component {
                             <Typography variant="subtitle2" style ={{paddingTop : "8px"}}>MLS Number: {listing.listingID}</Typography>
                         </div>
                     </div>
-                    <ExpansionPanel style={{ backgroundColor: "#DCD0C0" }}>
+                    <ExpansionPanel style={{ backgroundColor: "#DCD0C0" }} className = "expensionPannel">
                         <ExpansionPanelSummary
                             expandIcon={<ExpandMoreIcon />}
                         >

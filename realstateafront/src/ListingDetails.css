@@ -5,6 +5,7 @@
     font-family :Roboto;
     margin: 10px 0px;
     padding: 25px;
+    border: solid 1px #A6A6A6;
 }
 
 .RoomsDetails-Name, .RoomsDetails-value{

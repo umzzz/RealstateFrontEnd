@@ -6,6 +6,7 @@ import { Route } from "react-router-dom";
 import Footer from "./Footer";
 import NavBar from "./AppBar";
 import Search from "./Search";
+import CreateListing from "./CreateListing";
 import SearchResultMobile from "./SearchResultsMobile";
 
 class App extends Component {
@@ -61,6 +62,7 @@ class App extends Component {
                 />
               )}
             />
+            <Route exact path="/newListing" render={() => <CreateListing />} />
             <Footer />
           </Container>
         </Route>

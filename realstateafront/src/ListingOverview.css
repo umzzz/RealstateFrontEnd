@@ -1,42 +1,44 @@
-.ListingOverview-Content{
-    background-color: #f4f4f4;
-    text-align: left;
-    height: auto;
-    font-family :Roboto;
-    margin: 10px 0px;
-    padding: 25px;
+.ListingOverview-Content {
+  background-color: #f4f4f4;
+  text-align: left;
+  height: auto;
+  font-family: Roboto;
+  padding: 25px;
+  border: solid 1px #A6A6A6;
+}
+.listingoverviewpaper {
+  padding: 10px 0;
+
+}
+.ListingOverview-Price {
+  margin: 3px 20px;
 }
 
-.ListingOverview-Price{
-    margin: 3px 20px;
+.ListingOverview-Address {
+  padding: 8px 0;
+  width: 20%;
 }
 
-.ListingOverview-Address{
-    padding: 8px 0;
-    width : 20%
+.ListingOverview-mlsnumber {
+  margin: 3px 20px;
+  margin-bottom: 25px;
+}
+.ListingOverview-Details {
+  padding-bottom: 1.5rem;
 }
 
-.ListingOverview-mlsnumber{
-    margin: 3px 20px;
-    margin-bottom: 25px;
-}
-.ListingOverview-Details{
-    padding-bottom: 1.5rem;
+.ListingOverview-ContactInfo {
+  margin: auto 0;
+  padding-left: 1rem;
 }
 
-.ListingOverview-ContactInfo{
-    margin: auto 0;
-    padding-left: 1rem;
+.Footer-Content {
+  margin: auto;
+  color: black;
 }
 
-.Footer-Content{
-    margin: auto;
-    color: black;
-}
-
-@media(max-width: 768px){
-    .ListingOverview-Address{
-        width : 80%
-    }
-
+@media (max-width: 768px) {
+  .ListingOverview-Address {
+    width: 80%;
+  }
 }

@@ -2,7 +2,9 @@
     background-color: #f4f4f4;
     text-align: left;
     padding: 25px;
-    font-family: Roboto
+    font-family: Roboto;
+    margin: 10px 0px;
+    border: solid 1px #A6A6A6;
 }
 
 .ListingSummary-Summary {

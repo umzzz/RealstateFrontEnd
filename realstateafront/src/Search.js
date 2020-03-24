@@ -300,7 +300,7 @@ class Search extends Component {
                       label={this.state.currentSelectType}
                     />
                     <FormControl className={classes.select}>
-                      <InputLabel id="demo-simple-select-label">
+                      <InputLabel>
                         Min Price
                       </InputLabel>
                       <Select
@@ -317,7 +317,7 @@ class Search extends Component {
                       </Select>
                     </FormControl>
                     <FormControl className={classes.select}>
-                      <InputLabel id="demo-simple-select-label">
+                      <InputLabel>
                         Max Price
                       </InputLabel>
                       <Select
@@ -334,7 +334,7 @@ class Search extends Component {
                       </Select>
                     </FormControl>
                     <FormControl className={classes.select}>
-                      <InputLabel id="demo-simple-select-label">
+                      <InputLabel>
                         # of rooms
                       </InputLabel>
                       <Select
@@ -353,7 +353,7 @@ class Search extends Component {
                     </FormControl>
                     {this.state.currentSelectType === "Residential" && (
                       <FormControl className={classes.select}>
-                        <InputLabel id="demo-simple-select-label">
+                        <InputLabel>
                           # of bathrooms
                         </InputLabel>
                         <Select
